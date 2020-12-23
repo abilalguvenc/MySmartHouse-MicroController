@@ -1,9 +1,44 @@
 #include <Arduino.h>
+#include <Servo.h>
+#include "devices.h"
+#include "network.h"
+#include "mytime.h"
 
-void setup() {
-  // put your setup code here, to run once:
+
+String ssid = "G_Misafir_2.4G";
+String pass = "misafir01";
+
+void setup() 
+{
+  Serial.begin(115200);
+  Serial.println("");
+
+  MyDevices::init();
+  MyNetwork::init(ssid, pass);
 }
 
-void loop() {
+void loop() 
+{
+  if (MyTime::isOneSecondPassed()) 
+  {
+    float temp = MyDevices::GetTempreture();
+    // Create Packet
+    // MyNetwork::SendToAll(packet);
+    Serial.print(" Sicaklik: ");
+    Serial.print(temp);
+  }
+
+  MyNetwork::Handle();
+  
+
+  
+  digitalWrite(device::O_Lamba, HIGH);
+  delay(1000);
+  digitalWrite(device::O_Lamba, LOW);
+  delay(100);
+  digitalWrite(device::O_Lamba, HIGH);
+  delay(100);
+  digitalWrite(device::O_Lamba, LOW);
+  delay(100);
   // put your main code here, to run repeatedly:
 }
