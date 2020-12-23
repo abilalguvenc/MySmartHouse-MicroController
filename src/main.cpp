@@ -21,11 +21,11 @@ void loop()
 {
   if (MyTime::isOneSecondPassed()) 
   {
-    float temp = MyDevices::GetTempreture();
+    float temp = MyDevices::GetTemperature();
     // Create Packet
     // MyNetwork::SendToAll(packet);
     Serial.print(" Sicaklik: ");
-    Serial.print(temp);
+    Serial.println(temp);
   }
 
   MyNetwork::Handle();
