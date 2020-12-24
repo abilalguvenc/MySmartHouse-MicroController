@@ -4,6 +4,8 @@
 #define D0 16
 #define D1 05
 
+#define OFF 0
+#define ON 1
 
 enum device : int
 {
@@ -41,7 +43,12 @@ bool isDeviceValid(device dev)
   return res;
 }
 
-enum operation : int
+inline bool isBool(uint8_t val)
+{
+  return val == 1 || val == 0;
+}
+
+enum operation : uint8_t
 {
   Login = 0,          // opcode + username (str) + password (str)
   UpdateIoTState,     // opcode + iotid (byte) + newstate (bool)

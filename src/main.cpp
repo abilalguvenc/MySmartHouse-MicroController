@@ -8,11 +8,12 @@
 
 String ssid = "Guvenc_2.4G"; //"TacticForce";
 String pass = "guvenc01";    //"Hes20181920";
-String pack = "              ";
+String pack;
 
 void setup() 
 {
   Serial.begin(115200);
+  delay(1000);
   Serial.println("");
 
   MyDevices::init();
@@ -23,23 +24,26 @@ void setup()
 
 void loop() 
 {
-  // if (MyTime::isOneSecondPassed()) 
-  // {
-  //   // float temp = MyDevices::GetTemperature();
-  //   // Create Packet
-  //   // MyNetwork::SendToAll(packet);
-  // }
-  pack[0] = operation::UpdateIoTState;
-  pack[1] = device::M_Lamba;
-  pack[2] = 1;
-  
-  if (MyPacket::Handle(pack)) Serial.println("BASARILI!");
-  
-  delay(1000);
-  digitalWrite(device::M_Lamba, LOW);
-  delay(1000);
-  //MyNetwork::Handle();
-  //MyPacket::OnUpdateIoTState();
+  //if (MyTime::isOneSecondPassed()) 
+  //{
+  //  // float temp = MyDevices::GetTemperature();
+  //  // Create Packet
+  //  // MyNetwork::SendToAll(packet);
+  //}
+
+  // pack = "   ";
+  // pack[0] = (uint8_t)operation::UpdateIoTState;
+  // pack[1] = device::M_Lamba;
+  // pack[2] = ON;
+  // MyPacket::Handle(pack);
+  // delay(1000);
+  // 
+  // pack[2] = OFF;
+  // MyPacket::Handle(pack);
+  // delay(1000);
+
+
+  MyNetwork::Handle();
   
   // digitalWrite(device::O_Lamba, HIGH);
   // delay(1000);

@@ -7,46 +7,84 @@
 
 namespace MyPacket
 {
-    // class Packet 
-    // {
-    //     String packet;
-    //     int index;
-
-    //     void init(int size)
-    //     {
-    //         // packet.resize(size);
-    //         packet = "";
-    //         index = 0;
-    //     }
-    // }
-    bool OnUpdateIoTState(String packet, int index)
+    class Packet 
     {
-        if(packet.length() < 2) 
+        String packet;
+        unsigned int index;
+
+    public:
+        Packet()
         {
-            Serial.println("HATA: Hatali paket boyutu!");
+            packet = "";
+            index = 0;
+        }
+
+        Packet(String pkt)
+        {
+            packet = pkt;
+            index = 0;
+        }
+
+        uint8_t getByte()
+        {
+            return packet[index++];
+        }
+
+        unsigned int size()
+        {
+            return packet.length();
+        }
+
+        unsigned int sizeLeft()
+        {
+            return packet.length() - index;
+        }
+    };
+
+    bool OnUpdateIoTState(Packet packet)
+    {
+        if(packet.sizeLeft() < 2) 
+        {
+            Serial.println("HATA[P1]: Hatali paket boyutu!");
+
             return false;
         }
 
-        device dev = (device)packet[index++];
+        device dev = (device)packet.getByte();
 
         if (!isDeviceValid(dev))
         {
-            Serial.print("HATA: ");
+            Serial.print("HATA[P1]: Cihaz bulunamadi! (");
             Serial.print(dev);
-            Serial.println(" isimli cihaz bulunamadi!");
+            Serial.println(")");
+
             return false;
         }
 
-        digitalWrite(dev, (uint8_t)packet[index++] == 1);
+        uint8_t state = packet.getByte();
+        
+        if (!isBool(state))
+        {
+            Serial.print("HATA[P1]: Bool komut hatali! (");
+            Serial.print(state);
+            Serial.println(")");
+
+            return false;
+        } 
+
+        digitalWrite(dev, state);
         return true;
     }
 
-    bool Handle(String packet)
+    bool Handle(String pkt)
     {
-        int index = 0;
-        bool result = true;
-        operation op = (operation)packet[index++];
+        if (pkt.isEmpty())
+            return false;
 
+        Packet packet(pkt);
+
+        bool result = true;
+        operation op = (operation)packet.getByte();
 
         switch (op)
         {
@@ -55,7 +93,7 @@ namespace MyPacket
             break;
 
         case operation::UpdateIoTState:
-            return OnUpdateIoTState(packet, index);
+            return OnUpdateIoTState(packet);
             break;
 
         case operation::UpdateValue:

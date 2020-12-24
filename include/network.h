@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-//#include "packet.h"
+#include "packet.h"
 
 namespace MyNetwork
 {
@@ -52,10 +52,10 @@ namespace MyNetwork
                 if (c=='\n') break;
 
                 packet += c;
-                Serial.write(c);
+                //Serial.write(c);
                 }
                 
-                //MyPacket::Handle(packet);
+                MyPacket::Handle(packet);
             }
     }
     }
