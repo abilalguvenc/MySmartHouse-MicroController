@@ -1,51 +1,77 @@
-// #ifndef MYPACKET_H
-// #define MYPACKET_H
+#ifndef MYPACKET_H
+#define MYPACKET_H
 
-// #include <Arduino.h>
-// #include "devices.h"
-// #include "types.h"
+#include <Arduino.h>
+#include "devices.h"
+#include "types.h"
 
-// namespace MyPacket
-// {
-//     bool OnUpdateIoTState(String packet, int index)
-//     {
-//         device dev = (device)packet[index++];
-//         Serial.print("Device: ");
-//         Serial.println(dev);
-//         return false;
-//     }
+namespace MyPacket
+{
+    // class Packet 
+    // {
+    //     String packet;
+    //     int index;
 
-//     bool Handle(String packet)
-//     {
-//         int index = 0;
-//         bool result = true;
-//         operation op = (operation)packet[index++];
+    //     void init(int size)
+    //     {
+    //         // packet.resize(size);
+    //         packet = "";
+    //         index = 0;
+    //     }
+    // }
+    bool OnUpdateIoTState(String packet, int index)
+    {
+        if(packet.length() < 2) 
+        {
+            Serial.println("HATA: Hatali paket boyutu!");
+            return false;
+        }
+
+        device dev = (device)packet[index++];
+
+        if (!isDeviceValid(dev))
+        {
+            Serial.print("HATA: ");
+            Serial.print(dev);
+            Serial.println(" isimli cihaz bulunamadi!");
+            return false;
+        }
+
+        digitalWrite(dev, (uint8_t)packet[index++] == 1);
+        return true;
+    }
+
+    bool Handle(String packet)
+    {
+        int index = 0;
+        bool result = true;
+        operation op = (operation)packet[index++];
 
 
-//         switch (op)
-//         {
-//         case operation::Login:
+        switch (op)
+        {
+        case operation::Login:
             
-//             break;
+            break;
 
-//         case operation::UpdateIoTState:
-//             return OnUpdateIoTState(packet, index);
-//             break;
+        case operation::UpdateIoTState:
+            return OnUpdateIoTState(packet, index);
+            break;
 
-//         case operation::UpdateValue:
+        case operation::UpdateValue:
 
-//             break;
+            break;
 
-//         case operation::UpdateState:
+        case operation::UpdateState:
 
-//             break;
+            break;
 
-//         default:
-//             result = false;
-//             break;
-//         }
-//         return result;
-//     }
-// }
+        default:
+            result = false;
+            break;
+        }
+        return result;
+    }
+}
 
-// #endif
+#endif

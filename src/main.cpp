@@ -1,23 +1,24 @@
 #include <Arduino.h>
 #include <Servo.h>
-// #include "devices.h"
-// #include "network.h"
-// #include "mytime.h"
-//#include "packet.h"
+#include "devices.h"
+#include "network.h"
+#include "mytime.h"
+#include "packet.h"
 
-String ssid = "TacticForce";
-String pass = "Hes20181920";
+
+String ssid = "Guvenc_2.4G"; //"TacticForce";
+String pass = "guvenc01";    //"Hes20181920";
+String pack = "              ";
 
 void setup() 
 {
   Serial.begin(115200);
   Serial.println("");
 
-  // MyDevices::init();
-  // MyNetwork::init(ssid, pass);
-  //String pack = "asd";
-  //int in = 1;
-  //bool res = MyPacket::OnUpdateIoTState(pack, in);
+  MyDevices::init();
+  MyNetwork::init(ssid, pass);
+
+  digitalWrite(D5, 1);
 }
 
 void loop() 
@@ -27,17 +28,16 @@ void loop()
   //   // float temp = MyDevices::GetTemperature();
   //   // Create Packet
   //   // MyNetwork::SendToAll(packet);
-  //   // Serial.print(" Sicaklik: ");
-  //   // Serial.println(temp);
-
-  //   delay(10);
-
-    
-  //   // uint8_t a = 16;
-  //   // Serial.println(a);
   // }
-  Serial.println("asd");
-  delay(100);
+  pack[0] = operation::UpdateIoTState;
+  pack[1] = device::M_Lamba;
+  pack[2] = 1;
+  
+  if (MyPacket::Handle(pack)) Serial.println("BASARILI!");
+  
+  delay(1000);
+  digitalWrite(device::M_Lamba, LOW);
+  delay(1000);
   //MyNetwork::Handle();
   //MyPacket::OnUpdateIoTState();
   

@@ -1,6 +1,10 @@
 #ifndef MYTYPES_H
 #define MYTYPES_H
 
+#define D0 16
+#define D1 05
+
+
 enum device : int
 {
   O_Lamba = 16,
@@ -14,6 +18,28 @@ enum device : int
   //S_Hareket = 00,   // change this
   S_Sicaklik = 15
 };
+
+bool isDeviceValid(device dev)
+{
+  bool res = false;
+  switch(dev)
+  {
+    case device::O_Lamba:
+    case device::O_Pencere:
+    case device::O_Klima:
+    case device::Y_Lamba:
+    case device::Y_Klima:
+    case device::M_Lamba:
+    case device::M_Kettle:
+    case device::M_Kahve:
+    case device::S_Sicaklik:
+      res = true;
+      break;
+    default:
+      res = false;
+  }
+  return res;
+}
 
 enum operation : int
 {
