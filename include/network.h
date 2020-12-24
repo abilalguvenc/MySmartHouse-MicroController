@@ -1,6 +1,9 @@
+#ifndef MYNETWORK_H
+#define MYNETWORK_H
+
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-
+//#include "packet.h"
 
 namespace MyNetwork
 {
@@ -35,54 +38,27 @@ namespace MyNetwork
             if (MyNetwork::client)
                 Serial.println("Client baglandi!");
         }
-
+        
+        
         if (MyNetwork::client.connected())
         {
-            String command;
-
-            while(MyNetwork::client.available() > 0)
+            String packet;
+            if(MyNetwork::client.available() > 0)
             {
-            char c = MyNetwork::client.read();
+                while(MyNetwork::client.available() > 0)
+                {
+                char c = MyNetwork::client.read();
 
-            if (c=='\n') break;
+                if (c=='\n') break;
 
-            command += c;
-            Serial.write(c);
+                packet += c;
+                Serial.write(c);
+                }
+                
+                //MyPacket::Handle(packet);
             }
-        
-        switch (command[0])
-        {
-        case 0:
-            
-            break;
-
-        case 1:
-            
-            break;
-
-        case 2:
-
-            break;
-
-        case 3:
-
-            break;
-
-        case 4:
-
-            break;
-
-        case 5:
-
-            break;
-            
-        default:
-            break;
-        }
-            if(command=="pencere1_Ac")
-            {
-            //O_servomotor.write(90);
-            }
-        }
+    }
     }
 }
+
+#endif
