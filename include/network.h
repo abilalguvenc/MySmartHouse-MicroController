@@ -5,13 +5,28 @@
 #include <ESP8266WiFi.h>
 #include "packet.h"
 
+//#define STATICIP
+
 namespace MyNetwork
 {
     WiFiServer server(80);
     WiFiClient client;
 
+
+    IPAddress local_IP(192, 168, 1, 27);
+    IPAddress gateway(192, 168, 1, 1);
+    IPAddress subnet(255, 255, 0, 0);
+
+
     void init(String ssid, String pass)
     {
+        #ifdef STATICIP
+            if (!WiFi.config(local_IP, gateway, subnet)) 
+            {
+                Serial.println("HATA: STA ayari yapilamadi!");
+            }
+        #endif
+
         WiFi.begin(ssid, pass);
 
         Serial.print("Connecting");
@@ -47,17 +62,25 @@ namespace MyNetwork
             {
                 while(MyNetwork::client.available() > 0)
                 {
-                char c = MyNetwork::client.read();
-
-                if (c=='\n') break;
-
-                packet += c;
-                //Serial.write(c);
+                    char c = MyNetwork::client.read();
+                    if (c=='\n') break;
+                    packet += c;
                 }
-                
-                MyPacket::Handle(packet);
+                Serial.print("Packet: ");
+                Serial.println(packet);
+
+                if (MyPacket::Handle(packet) && MyNetwork::client.available()) Serial.println(packet);
+                //MyNetwork::client.stop()
             }
+        }
     }
+
+    void SendToAll(String packet)
+    {
+        if (MyNetwork::client.connected())
+        {
+            MyNetwork::client.println(packet);
+        }
     }
 }
 

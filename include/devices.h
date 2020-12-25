@@ -39,12 +39,12 @@ namespace MyDevices
 
   float GetTemperature()
   {
-    float temp = 1.1;//dht.readTemperature();
+    float temp = 24.3;//dht.readTemperature();
     
     if (isnan(temp)) 
     {
       Serial.println(" HATA: Sicaklik Sensoru Okunamadi");
-      return -1.1;
+      return -1.0;
     }
 
     return temp;

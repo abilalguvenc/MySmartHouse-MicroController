@@ -6,10 +6,11 @@
 #include "packet.h"
 
 // BEYZA BURAYA beyza_e beyza_y veya hes yaz
-#define hes
+#define bilal
 
 #ifdef bilal
 #define my_ssid "Guvenc_2.4G"
+#define my_pass "guvenc01"
 #endif
 
 #ifdef beyza_e
@@ -43,34 +44,15 @@ void setup()
 
 void loop() 
 {
-  //if (MyTime::isOneSecondPassed()) 
-  //{
-  //  // float temp = MyDevices::GetTemperature();
-  //  // Create Packet
-  //  // MyNetwork::SendToAll(packet);
-  //}
-
-  // pack = "   ";
-  // pack[0] = (uint8_t)operation::UpdateIoTState;
-  // pack[1] = device::M_Lamba;
-  // pack[2] = ON;
-  // MyPacket::Handle(pack);
-  // delay(1000);
-  // 
-  // pack[2] = OFF;
-  // MyPacket::Handle(pack);
-  // delay(1000);
-
+  if (MyTime::isOneSecondPassed()) 
+  {
+    float temp = MyDevices::GetTemperature();
+    
+    String tmpPck = MyPacket::NewTempPacket(temp);
+    
+    MyNetwork::SendToAll(tmpPck);
+  }
 
   MyNetwork::Handle();
   
-  // digitalWrite(device::O_Lamba, HIGH);
-  // delay(1000);
-  // digitalWrite(device::O_Lamba, LOW);
-  // delay(100);
-  // digitalWrite(device::O_Lamba, HIGH);
-  // delay(100);
-  // digitalWrite(device::O_Lamba, LOW);
-  // delay(100);
-  // put your main code here, to run repeatedly:
 }

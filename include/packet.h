@@ -110,6 +110,15 @@ namespace MyPacket
         }
         return result;
     }
+
+    String NewTempPacket(float temp)
+    {
+        String packet;
+        packet += operation::UpdateValue;
+        packet += device::S_Sicaklik;
+        packet += (uint8_t)temp;
+        return packet;
+    }
 }
 
 #endif
