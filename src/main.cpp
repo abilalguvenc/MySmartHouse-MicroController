@@ -5,9 +5,28 @@
 #include "mytime.h"
 #include "packet.h"
 
+// BEYZA BURAYA beyza_e beyza_y veya hes yaz
+#define hes
 
-String ssid = "Guvenc_2.4G"; //"TacticForce";
-String pass = "guvenc01";    //"Hes20181920";
+#ifdef bilal
+#define my_ssid "Guvenc_2.4G"
+#endif
+
+#ifdef beyza_e
+#define my_ssid "ZyXEL_1578"
+#define my_pass "34BUYUK42"
+#endif
+
+#ifdef beyza_y
+#define my_ssid "ZyXEL_1578"
+#define my_pass "34BUYUK42"
+#endif
+
+#ifdef hes
+#define my_ssid "TacticForce"
+#define my_pass "Hes20181920"
+#endif
+
 String pack;
 
 void setup() 
@@ -17,7 +36,7 @@ void setup()
   Serial.println("");
 
   MyDevices::init();
-  MyNetwork::init(ssid, pass);
+  MyNetwork::init(my_ssid, my_pass);
 
   digitalWrite(D5, 1);
 }
