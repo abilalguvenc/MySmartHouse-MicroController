@@ -79,7 +79,7 @@ namespace MyNetwork
     {
         if (MyNetwork::client.connected())
         {
-            MyNetwork::client.println(packet);
+            MyNetwork::client.print(packet);
         }
     }
 }
