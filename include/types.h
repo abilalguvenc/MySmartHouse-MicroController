@@ -89,18 +89,16 @@ device_pin getDevicePin(device dev)
 
 inline bool isBool(uint8_t val)
 {
-  return val == 1 || val == 0;
+  return val == (uint8_t)0x1 || val == (uint8_t)0x0;
 }
 
 enum operation : uint8_t
 {
   Login = 0,          // opcode + username (str) + password (str)
-  UpdateDevice,       // opcode + iotid (byte) + newstate (bool)
-  UpdateValue,        // opcode + valueid (byte) + value (byte)     (temprature)
+  UpdateDevice,       // opcode + deviceId (byte) + newstate (bool) + temperature (int)
+  UpdateValue,        // opcode + 
   LoginResult,        // opcode + success (bool) ? iotstates[n] (bool[n]) : null
   Alert,              // opcode + alertid (byte) + alertstate (bool)
 };
-
-
 
 #endif

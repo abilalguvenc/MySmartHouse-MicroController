@@ -36,9 +36,9 @@ void setup()
   delay(1000);
   Serial.println("");
 
-  MyDevices::init();
   MyNetwork::init(my_ssid, my_pass);
 
+  MyDevices::init();
   MyDevices::SetDeviceState(device::A_Yangin, ON);
 
   Serial.println("\nAkilli evim baslatildi!");

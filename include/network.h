@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "packet.h"
+#include "types.h"
+#include <list>
 
 //#define STATICIP
 
@@ -17,7 +19,6 @@ namespace MyNetwork
     IPAddress gateway(192, 168, 1, 1);
     IPAddress subnet(255, 255, 0, 0);
 
-
     void init(String ssid, String pass)
     {
         #ifdef STATICIP
@@ -26,9 +27,9 @@ namespace MyNetwork
                 Serial.println("HATA: STA ayari yapilamadi!");
             }
         #endif
-
+        
         WiFi.begin(ssid, pass);
-
+        
         Serial.print("Connecting to WiFi");
         while(WiFi.status()!= WL_CONNECTED)
         {
@@ -66,11 +67,24 @@ namespace MyNetwork
                     if (c=='\n') break;
                     packet += c;
                 }
-                Serial.print("Packet: ");
-                Serial.println(packet);
 
-                if (MyPacket::Handle(packet) && MyNetwork::client.available()) Serial.println(packet);
-                //MyNetwork::client.stop()
+                Serial.print("\nPacket: ");
+                for (char c : packet)
+                {
+                    Serial.print((uint8_t)c);
+                    Serial.print(" ");
+                }
+                Serial.println("");
+
+                if (MyPacket::Handle(packet)) 
+                {
+                    Serial.println("Kullanici islemi basariyla gerceklestirildi.\n");
+                }
+                else
+                {
+                    Serial.println("Kullanicinin gonderdigi paket hatali!\n");
+                    //MyNetwork::client.stop();
+                }
             }
         }
     }

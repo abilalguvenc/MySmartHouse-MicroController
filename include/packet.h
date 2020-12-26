@@ -41,38 +41,38 @@ namespace MyPacket
         }
     };
 
-    bool OnUpdateIoTState(Packet packet)
+    bool OnLogin(Packet packet)
+    {
+        Serial.println("Implement 'Packet OnLogin'.");
+        return true;
+    }
+
+    bool OnUpdateDevice(Packet packet)
     {
         if(packet.sizeLeft() < 2) 
         {
             Serial.println("HATA[P1]: Hatali paket boyutu!");
-
             return false;
         }
 
         device dev = (device)packet.getByte();
-
-        if (!isDeviceValid(dev))
-        {
-            Serial.print("HATA[P1]: Cihaz bulunamadi! (");
-            Serial.print(dev);
-            Serial.println(")");
-
-            return false;
-        }
-
         uint8_t state = packet.getByte();
-        
+
         if (!isBool(state))
         {
-            Serial.print("HATA[P1]: Bool komut hatali! (");
+            Serial.print("HATA[P1]: Girilen deger bool degil! (");
             Serial.print(state);
             Serial.println(")");
 
             return false;
         } 
 
-        MyDevices::SetDeviceState(dev, state);
+        return MyDevices::SetDeviceState(dev, state);
+    }
+
+    bool OnUpdateValue(Packet packet)
+    {
+        Serial.println("Implement 'Packet OnUpdateValue'.");
         return true;
     }
 
@@ -83,29 +83,23 @@ namespace MyPacket
 
         Packet packet(pkt);
 
-        bool result = false;
         operation op = (operation)packet.getByte();
 
         switch (op)
         {
         case operation::Login:
-            
-            break;
+            return OnLogin(packet);
 
         case operation::UpdateDevice:
-            Serial.print("Update device: ");
-            return OnUpdateIoTState(packet);
-            break;
+            return OnUpdateDevice(packet);
 
         case operation::UpdateValue:
-
-            break;
+            return OnUpdateValue(packet);
 
         default:
-            result = false;
             break;
         }
-        return result;
+        return false;
     }
 
     String NewTempPacket()

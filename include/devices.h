@@ -69,7 +69,7 @@ namespace MyDevices
   {
     if (!isDeviceValid(dev))
     {
-      Serial.print("HATA: Gecersiz cihaz! (");
+      Serial.print("HATA: Cihaz bulunamadi! (");
       Serial.print(dev);
       Serial.println(")");
       return false;
@@ -122,6 +122,7 @@ namespace MyDevices
       Serial.println(")");
       return false;
     }
+
     if (dev == device::O_Klima && state == ON)
     {
       Serial.println("HATA: Klima derecesi ayarlanmadi!");
@@ -180,6 +181,7 @@ namespace MyDevices
     MyDevices::SetDeviceState(device::O_Lamba, OFF);
     MyDevices::SetDeviceState(device::O_Pencere, OFF);
     MyDevices::SetDeviceState(device::O_Klima, OFF);
+    MyDevices::UpdateAC();
 
     MyDevices::SetDeviceState(device::Y_Lamba, OFF);
     MyDevices::SetDeviceState(device::Y_Pencere, OFF);
