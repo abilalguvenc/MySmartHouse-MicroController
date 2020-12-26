@@ -35,7 +35,7 @@ namespace MyDevices
 
   float GetTemperature()
   {
-    float temp = 24.3;//dht.readTemperature();
+    float temp = 24.3; //dht.readTemperature();
     
     if (isnan(temp)) 
     {
@@ -46,6 +46,11 @@ namespace MyDevices
     return temp;
   }
 
+  bool GetMotion()
+  {
+    return true;
+  }
+
   bool GetAlarm(device dev)
   {
     if (MyDevices::device_states[dev] == OFF)
@@ -54,7 +59,7 @@ namespace MyDevices
     switch (dev)
     {
       case device::A_Hirsiz:
-        return true;
+        return (MyDevices::GetMotion());
 
       case device::A_Yangin:
         return (MyDevices::GetTemperature() > 70.0F);
