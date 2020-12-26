@@ -29,7 +29,7 @@ namespace MyNetwork
 
         WiFi.begin(ssid, pass);
 
-        Serial.print("Connecting");
+        Serial.print("Connecting to WiFi");
         while(WiFi.status()!= WL_CONNECTED)
         {
             delay(1000);

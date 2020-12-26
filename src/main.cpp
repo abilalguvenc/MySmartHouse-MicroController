@@ -39,18 +39,35 @@ void setup()
   MyDevices::init();
   MyNetwork::init(my_ssid, my_pass);
 
-  digitalWrite(D5, 1);
+  MyDevices::SetDeviceState(device::A_Yangin, ON);
+
+  Serial.println("\nAkilli evim baslatildi!");
 }
 
 void loop() 
 {
   if (MyTime::isOneSecondPassed()) 
-  {
-    float temp = MyDevices::GetTemperature();
-    
-    String tmpPck = MyPacket::NewTempPacket(temp);
-    
+  {    
+    MyDevices::UpdateAC();
+
+    String tmpPck = MyPacket::NewTempPacket();
     MyNetwork::SendToAll(tmpPck);
+
+    if (MyDevices::GetAlarm(device::A_Hirsiz))
+    {
+      Serial.println("ALARM: Hirsiz var!");
+
+      String alertPck = MyPacket::NewAlarmPacket(device::A_Hirsiz);
+      MyNetwork::SendToAll(alertPck);
+    }
+    
+    if (MyDevices::GetAlarm(device::A_Yangin))
+    {
+      Serial.println("ALARM: Yangin var!");
+      
+      String alertPck = MyPacket::NewAlarmPacket(device::A_Yangin);
+      MyNetwork::SendToAll(alertPck);
+    }
   }
 
   MyNetwork::Handle();

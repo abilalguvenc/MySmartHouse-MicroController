@@ -72,7 +72,7 @@ namespace MyPacket
             return false;
         } 
 
-        digitalWrite(dev, state);
+        MyDevices::SetDeviceState(dev, state);
         return true;
     }
 
@@ -83,7 +83,7 @@ namespace MyPacket
 
         Packet packet(pkt);
 
-        bool result = true;
+        bool result = false;
         operation op = (operation)packet.getByte();
 
         switch (op)
@@ -92,15 +92,12 @@ namespace MyPacket
             
             break;
 
-        case operation::UpdateIoTState:
+        case operation::UpdateDevice:
+            Serial.print("Update device: ");
             return OnUpdateIoTState(packet);
             break;
 
         case operation::UpdateValue:
-
-            break;
-
-        case operation::UpdateState:
 
             break;
 
@@ -111,12 +108,21 @@ namespace MyPacket
         return result;
     }
 
-    String NewTempPacket(float temp)
+    String NewTempPacket()
     {
         String packet;
-        packet += operation::UpdateValue;
-        packet += device::S_Sicaklik;
-        packet += (uint8_t)temp;
+        packet += (char)operation::UpdateValue;
+        packet += (char)device::O_Klima;
+        packet += (char)MyDevices::device_states[O_Klima];
+        packet += (char)(uint8_t)MyDevices::GetTemperature();
+        return packet;
+    }
+
+    String NewAlarmPacket(device dev)
+    {
+        String packet;
+        packet += (char)operation::Alert;
+        packet += (char)dev;
         return packet;
     }
 }
