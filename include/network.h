@@ -53,6 +53,8 @@ namespace MyNetwork
             MyNetwork::client = MyNetwork::server.available();
             if (MyNetwork::client)
                 Serial.println("Client baglandi!");
+            
+            client.print(MyPacket::DeviceStatesPacket());
         }
         
         

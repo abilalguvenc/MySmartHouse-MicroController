@@ -119,6 +119,23 @@ namespace MyPacket
         packet += (char)dev;
         return packet;
     }
+
+    String DeviceStatesPacket()
+    {
+        String packet;
+        packet += (char)operation::LoginResult;
+        packet += (char)MyDevices::device_states[device::O_Lamba];
+        packet += (char)MyDevices::device_states[device::O_Pencere];
+        packet += (char)MyDevices::device_states[device::O_Klima];
+        packet += (char)MyDevices::device_states[device::Y_Lamba];
+        packet += (char)MyDevices::device_states[device::Y_Pencere];
+        packet += (char)MyDevices::device_states[device::M_Lamba];
+        packet += (char)MyDevices::device_states[device::M_Kettle];
+        packet += (char)MyDevices::device_states[device::A_Hirsiz];
+        packet += (char)MyDevices::device_states[device::A_Yangin];
+        packet += (char)MyDevices::O_Klima_Derece;
+        return packet;
+    }
 }
 
 #endif
