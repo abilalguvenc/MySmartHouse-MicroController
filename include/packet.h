@@ -57,7 +57,7 @@ namespace MyPacket
 
         device dev = (device)packet.getByte();
         uint8_t state = packet.getByte();
-
+        
         if (!isBool(state))
         {
             Serial.print("HATA[P1]: Girilen deger bool degil! (");
@@ -66,6 +66,18 @@ namespace MyPacket
 
             return false;
         } 
+
+        if (dev == device::O_Klima) 
+        {
+            if (packet.sizeLeft()<1)
+            {
+                Serial.println("Hata[P1]: Klima derecesi gonderilmedi!");
+                return false;
+            }
+            
+            uint8_t degree = packet.getByte();
+            return MyDevices::SetDeviceState(dev, state, degree);
+        }
 
         return MyDevices::SetDeviceState(dev, state);
     }
