@@ -43,8 +43,8 @@ namespace MyPacket
 
     bool OnLogin(Packet packet)
     {
-        Serial.println("Implement 'Packet OnLogin'.");
-        return true;
+        Serial.println("'OnLogin' fonksiyonu tanimli degil!");
+        return false;
     }
 
     bool OnUpdateDevice(Packet packet)
@@ -72,8 +72,8 @@ namespace MyPacket
 
     bool OnUpdateValue(Packet packet)
     {
-        Serial.println("Implement 'Packet OnUpdateValue'.");
-        return true;
+        Serial.println("'OnUpdateValue' fonksiyonu tanimli degil!");
+        return false;
     }
 
     bool Handle(String pkt)
