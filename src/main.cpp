@@ -46,6 +46,8 @@ void setup()
 
 void loop() 
 {
+  MyNetwork::Handle();
+
   if (MyTime::isOneSecondPassed()) 
   {    
     MyDevices::UpdateAC();
@@ -69,7 +71,4 @@ void loop()
       MyNetwork::SendToAll(alertPck);
     }
   }
-
-  MyNetwork::Handle();
-  
 }

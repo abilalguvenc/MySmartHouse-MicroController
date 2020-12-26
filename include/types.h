@@ -1,9 +1,6 @@
 #ifndef MYTYPES_H
 #define MYTYPES_H
 
-#define D0 16
-#define D1 05
-
 #define OFF false
 #define ON true
 
@@ -25,21 +22,21 @@ enum device : int
 
 enum device_pin : int
 {
-  PO_Lamba    = 05,
-  PO_Pencere  = 04,
-  PO_Klima_H  = 00,
-  PO_Klima_C  = 02,
+  PO_Lamba    = D1, // 05, D1
+  PO_Pencere  = D2, // 04, D2
+  PO_Klima_H  = D3, // 00, D3
+  PO_Klima_C  = D4, // 02, D4
 
-  PY_Lamba    = 14,
-  PY_Pencere  = 12,
+  PY_Lamba    = D5, // 14, D5
+  PY_Pencere  = D6, // 12, D6
 
-  PM_Lamba    = 13,
-  PM_Kettle   = 15,
-  
-  PS_Hareket  = 99,   // change this
-  PS_Sicaklik = 16,
+  PM_Lamba    = D7, // 13, D7
+  PM_Kettle   = D8, // 15, D8
 
-  P_None = 99
+  PS_Hareket  = D0, // 21, A0
+  PS_Sicaklik = A0, // 16, D1
+
+  P_None      = 99
 };
 
 bool isDeviceValid(device dev)
