@@ -189,21 +189,21 @@ namespace MyDevices
     pinMode(device_pin::PM_Kettle, OUTPUT);
     
     pinMode(device_pin::PS_Hareket, INPUT);
-    //pinMode(device_pin::PS_Sicaklik, INPUT);
+    pinMode(device_pin::PS_Sicaklik, INPUT);
 
-    MyDevices::SetDeviceState(device::O_Lamba, OFF);
-    MyDevices::SetDeviceState(device::O_Pencere, OFF);
-    MyDevices::SetDeviceState(device::O_Klima, OFF);
-    MyDevices::UpdateAC();
+    SetDeviceState(device::O_Lamba, OFF);
+    SetDeviceState(device::O_Pencere, OFF);
+    SetDeviceState(device::O_Klima, OFF);
+    UpdateAC();
 
-    MyDevices::SetDeviceState(device::Y_Lamba, OFF);
-    MyDevices::SetDeviceState(device::Y_Pencere, OFF);
+    SetDeviceState(device::Y_Lamba, OFF);
+    SetDeviceState(device::Y_Pencere, OFF);
 
-    MyDevices::SetDeviceState(device::M_Lamba, OFF);
-    MyDevices::SetDeviceState(device::M_Kettle, OFF);
+    SetDeviceState(device::M_Lamba, OFF);
+    SetDeviceState(device::M_Kettle, OFF);
 
-    MyDevices::SetDeviceState(device::A_Hirsiz, OFF);
-    MyDevices::SetDeviceState(device::A_Yangin, OFF);
+    SetDeviceState(device::A_Hirsiz, OFF);
+    SetDeviceState(device::A_Yangin, OFF);
   }
 }
 
