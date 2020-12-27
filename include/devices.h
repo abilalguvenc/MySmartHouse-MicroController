@@ -51,6 +51,36 @@ namespace MyDevices
     return true;
   }
 
+  void UpdateAC()
+  {
+    if (MyDevices::device_states[device::O_Klima] == OFF)
+    {
+      digitalWrite(device_pin::PO_Klima_C, OFF);
+      digitalWrite(device_pin::PO_Klima_H, OFF);
+      return;
+    }
+
+    float temp = MyDevices::GetTemperature();
+
+    if (temp > O_Klima_Derece+1)
+    {
+      digitalWrite(device_pin::PO_Klima_H, OFF);
+      digitalWrite(device_pin::PO_Klima_C, ON);
+      return;
+    }
+
+    if (O_Klima_Derece-1 > temp)
+    {
+      digitalWrite(device_pin::PO_Klima_H, ON);
+      digitalWrite(device_pin::PO_Klima_C, OFF);
+      return;
+    }
+
+    digitalWrite(device_pin::PO_Klima_H, ON);
+    digitalWrite(device_pin::PO_Klima_C, ON);
+    return;
+  }
+
   bool GetAlarm(device dev)
   {
     if (MyDevices::device_states[dev] == OFF)
@@ -99,6 +129,7 @@ namespace MyDevices
 
       case device::O_Klima:
         if (state) MyDevices::O_Klima_Derece = degree;
+        MyDevices::UpdateAC();
         break;
       case device::A_Hirsiz:
         if (state) Serial.println("Hirsiz alarmi aktif edildi.");
@@ -137,36 +168,6 @@ namespace MyDevices
     return SetDeviceState(dev, state, 0.0F);
   }
   
-  void UpdateAC()
-  {
-    if (MyDevices::device_states[device::O_Klima] == OFF)
-    {
-      digitalWrite(device_pin::PO_Klima_C, OFF);
-      digitalWrite(device_pin::PO_Klima_H, OFF);
-      return;
-    }
-
-    float temp = MyDevices::GetTemperature();
-
-    if (temp > O_Klima_Derece+1)
-    {
-      digitalWrite(device_pin::PO_Klima_H, OFF);
-      digitalWrite(device_pin::PO_Klima_C, ON);
-      return;
-    }
-
-    if (O_Klima_Derece-1 > temp)
-    {
-      digitalWrite(device_pin::PO_Klima_H, ON);
-      digitalWrite(device_pin::PO_Klima_C, OFF);
-      return;
-    }
-
-    digitalWrite(device_pin::PO_Klima_H, ON);
-    digitalWrite(device_pin::PO_Klima_C, ON);
-    return;
-  }
-
   void init()
   {
     pinMode(device_pin::PO_Lamba, OUTPUT);
