@@ -4,8 +4,7 @@
 #include <Servo.h>
 #include "types.h"
 #include <map>
-//#include <DHT.h>
-#define DHTTYPE DHT11 // DHT sensor tipini belirliyoruz.
+#include <DHT.h>
 
 #define DOOR_OPEN 90
 #define DOOR_CLOSE 0
@@ -15,7 +14,7 @@
 
 namespace MyDevices
 {
-  //DHT dht(S_Sicaklik, DHTTYPE);
+  DHT dht(PS_Sicaklik, DHT11);
   Servo Servo_O_Pencere, Servo_Y_Pencere;
   int O_Klima_Derece;
 
@@ -42,11 +41,11 @@ namespace MyDevices
 
   float GetTemperature()
   {
-    float temp = 24.3; //dht.readTemperature();
+    float temp = dht.readTemperature();
     
     if (isnan(temp)) 
     {
-      Serial.println(" HATA: Sicaklik Sensoru Okunamadi");
+      Serial.println(" HATA: Sicaklik Sensoru Okunamadi!");
       return -1.0;
     }
 
@@ -55,7 +54,8 @@ namespace MyDevices
 
   bool GetMotion()
   {
-    return true;
+    int motion = digitalRead(device_pin::PS_Hareket);
+    return motion == HIGH;
   }
 
   void UpdateAC()
@@ -188,7 +188,7 @@ namespace MyDevices
     pinMode(device_pin::PM_Lamba, OUTPUT);
     pinMode(device_pin::PM_Kettle, OUTPUT);
     
-    //pinMode(device_pin::PS_Hareket, INPUT);
+    pinMode(device_pin::PS_Hareket, INPUT);
     //pinMode(device_pin::PS_Sicaklik, INPUT);
 
     MyDevices::SetDeviceState(device::O_Lamba, OFF);
