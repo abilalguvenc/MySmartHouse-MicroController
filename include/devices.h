@@ -7,6 +7,8 @@
 //#include <DHT.h>
 #define DHTTYPE DHT11 // DHT sensor tipini belirliyoruz.
 
+#define DOOR_OPEN 90
+#define DOOR_CLOSE 0
 
 
 
@@ -32,6 +34,11 @@ namespace MyDevices
     {device::A_Hirsiz , false},
     {device::A_Yangin , false},
   };
+
+  int GetServoCommand(bool state)
+  {
+    return state ? DOOR_OPEN : DOOR_CLOSE;
+  }
 
   float GetTemperature()
   {
@@ -120,11 +127,11 @@ namespace MyDevices
         break;
 
       case device::O_Pencere:
-        Servo_O_Pencere.write(state);
+        Servo_O_Pencere.write(GetServoCommand(state));
         break;
 
       case device::Y_Pencere:
-        Servo_Y_Pencere.write(state);
+        Servo_Y_Pencere.write(GetServoCommand(state));
         break;
 
       case device::O_Klima:
