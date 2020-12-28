@@ -55,6 +55,7 @@ namespace MyNetwork
                 Serial.println("Client baglandi!");
             
             client.print(MyPacket::DeviceStatesPacket());
+            
         }
         
         
@@ -65,15 +66,15 @@ namespace MyNetwork
             {
                 while(MyNetwork::client.available() > 0)
                 {
-                    char c = MyNetwork::client.read();
+                    char c = MyNetwork::client.read(); //gelen veriyi client bağlı olduğu sürece okur.
                     if (c=='\n') break;
-                    packet += c;
+                    packet += c; //gelen veriyi paketler.
                 }
 
-                Serial.print("\nPacket: ");
+                Serial.print("\nPacket: "); //gelen paketi yazdırır.
                 for (char c : packet)
                 {
-                    Serial.print((uint8_t)c);
+                    Serial.print((uint8_t)c); //char tipinden uint'e çevirerek yazdırır.
                     Serial.print(" ");
                 }
                 Serial.println("");
