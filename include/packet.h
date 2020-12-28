@@ -120,7 +120,6 @@ namespace MyPacket
         packet += (char)operation::UpdateValue;
         packet += (char)device::O_Klima;
         packet += (char)MyDevices::device_states[O_Klima];
-        packet += (char)MyDevices::O_Klima_Derece;
         packet += (char)(uint8_t)MyDevices::GetTemperature();
         return packet;
     }

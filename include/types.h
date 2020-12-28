@@ -34,7 +34,7 @@ enum device_pin : int
   PM_Kettle   = D8, // 15, D8
 
   PS_Hareket  = A0, // ??, A0
-  PS_Sicaklik = D0, // 16, D1
+  PS_Sicaklik = D0, // 16, D0
 
   P_None      = 99
 };
