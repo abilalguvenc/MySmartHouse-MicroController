@@ -22,19 +22,19 @@ enum device : int
 
 enum device_pin : int
 {
-  PO_Lamba    = D1, // 05, D1
-  PO_Pencere  = D2, // 04, D2
-  PO_Klima_H  = D3, // 00, D3
-  PO_Klima_C  = D4, // 02, D4
+  PO_Lamba    = D0,
+  PO_Pencere  = D1,
+  PO_Klima_H  = D2,
+  PO_Klima_C  = D3,
 
-  PY_Lamba    = D5, // 14, D5
-  PY_Pencere  = D6, // 12, D6
+  PY_Lamba    = D5,
+  PY_Pencere  = D6,
 
-  PM_Lamba    = D7, // 13, D7
-  PM_Kettle   = D8, // 15, D8
+  PM_Lamba    = D8,
+  PM_Kettle   = D8,
 
-  PS_Hareket  = A0, // ??, A0
-  PS_Sicaklik = D0, // 16, D1
+  PS_Hareket  = D7,
+  PS_Sicaklik = D4,
 
   P_None      = 99
 };

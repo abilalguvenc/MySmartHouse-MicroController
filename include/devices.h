@@ -189,8 +189,8 @@ namespace MyDevices
     pinMode(device_pin::PM_Kettle, OUTPUT);
     
     pinMode(device_pin::PS_Hareket, INPUT);
-    pinMode(device_pin::PS_Sicaklik, INPUT);
-
+    dht.begin();
+    
     SetDeviceState(device::O_Lamba, OFF);
     SetDeviceState(device::O_Pencere, OFF);
     SetDeviceState(device::O_Klima, OFF);
