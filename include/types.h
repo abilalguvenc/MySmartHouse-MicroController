@@ -27,10 +27,10 @@ enum device_pin : int
   PO_Klima_H  = D2,
   PO_Klima_C  = D3,
 
-  PY_Lamba    = D5,
+  // PY_Lamba    = D5,
   PY_Pencere  = D6,
 
-  PM_Lamba    = D8,
+  PM_Lamba    = D5,
   PM_Kettle   = D8,
 
   PS_Hareket  = D7,
@@ -72,8 +72,8 @@ device_pin getDevicePin(device dev)
       return device_pin::PO_Lamba;
     case device::O_Pencere:
       return device_pin::PO_Pencere;
-    case device::Y_Lamba:
-      return device_pin::PY_Lamba;
+    // case device::Y_Lamba:
+    //   return device_pin::PY_Lamba;
     case device::M_Lamba:
       return device_pin::PM_Lamba;
     case device::M_Kettle:

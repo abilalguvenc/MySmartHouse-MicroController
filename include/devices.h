@@ -182,7 +182,7 @@ namespace MyDevices
     pinMode(device_pin::PO_Klima_C, OUTPUT);
     Servo_O_Pencere.attach(device_pin::PO_Pencere);
 
-    pinMode(device_pin::PY_Lamba, OUTPUT);
+    // pinMode(device_pin::PY_Lamba, OUTPUT);
     Servo_Y_Pencere.attach(device_pin::PY_Pencere);
     
     pinMode(device_pin::PM_Lamba, OUTPUT);

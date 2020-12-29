@@ -6,7 +6,7 @@
 #include "packet.h"
 
 // BEYZA BURAYA beyza_e beyza_y veya hes yaz
-#define bilal
+#define beyza_e
 
 #ifdef bilal
 #define my_ssid "Guvenc_2.4G"
@@ -14,7 +14,7 @@
 #endif
 
 #ifdef beyza_e
-#define my_ssid "ZyXEL_1578"
+#define my_ssid "Buyuk"
 #define my_pass "34BUYUK42"
 #endif
 
