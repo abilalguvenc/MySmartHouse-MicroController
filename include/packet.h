@@ -118,8 +118,7 @@ namespace MyPacket
     {
         String packet;
         packet += (char)operation::UpdateValue;
-        packet += (char)device::O_Klima;
-        packet += (char)MyDevices::device_states[O_Klima];
+        packet += (char)device::S_Termometre;
         packet += (char)(uint8_t)MyDevices::GetTemperature();
         return packet;
     }

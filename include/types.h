@@ -17,7 +17,8 @@ enum device : int
   M_Kettle,
 
   A_Hirsiz,
-  A_Yangin
+  A_Yangin,
+  S_Termometre
 };
 
 enum device_pin : int
