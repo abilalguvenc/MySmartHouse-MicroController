@@ -10,8 +10,6 @@
 #define DOOR_CLOSE 0
 
 
-
-
 namespace MyDevices
 {
   DHT dht(PS_Sicaklik, DHT11);

@@ -40,7 +40,8 @@ void setup()
 
   MyDevices::init();
   MyDevices::SetDeviceState(device::A_Yangin, ON);
-
+  MyDevices::SetDeviceState(device::O_Pencere, ON);
+  MyDevices::SetDeviceState(device::Y_Pencere, ON);
   Serial.println("\nAkilli evim baslatildi!");
 }
 
