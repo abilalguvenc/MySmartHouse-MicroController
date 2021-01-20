@@ -5,22 +5,11 @@
 #include "mytime.h"
 #include "packet.h"
 
-// BEYZA BURAYA beyza_e beyza_y veya hes yaz
-#define hes
-
-#ifdef bilal
-#define my_ssid "Guvenc_2.4G"
-#define my_pass "guvenc01"
-#endif
+#define beyza_e
 
 #ifdef beyza_e
 #define my_ssid "Buyuk"
-#define my_pass "34BUYUK42"
-#endif
-
-#ifdef beyza_y
-#define my_ssid "ZyXEL_1578"
-#define my_pass "34BUYUK42"
+#define my_pass "34buyuk42"
 #endif
 
 #ifdef hes
@@ -40,8 +29,7 @@ void setup()
 
   MyDevices::init();
   MyDevices::SetDeviceState(device::A_Yangin, ON);
-  MyDevices::SetDeviceState(device::O_Pencere, ON);
-  MyDevices::SetDeviceState(device::Y_Pencere, ON);
+  MyDevices::SetDeviceState(device::A_Hirsiz, ON);
   Serial.println("\nAkilli evim baslatildi!");
 }
 
