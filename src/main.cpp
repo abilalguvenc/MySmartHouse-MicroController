@@ -29,7 +29,6 @@ void setup()
 
   MyDevices::init();
   MyDevices::SetDeviceState(device::A_Yangin, ON);
-  MyDevices::SetDeviceState(device::A_Hirsiz, ON);
   Serial.println("\nAkilli evim baslatildi!");
 }
 
