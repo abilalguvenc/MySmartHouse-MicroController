@@ -50,6 +50,8 @@ void loop()
 
       String alertPck = MyPacket::NewAlarmPacket(device::A_Hirsiz);
       MyNetwork::SendToAll(alertPck);
+
+      MyDevices::SetDeviceState(device::A_Hirsiz, false);
     }
     
     if (MyDevices::GetAlarm(device::A_Yangin))
@@ -58,6 +60,8 @@ void loop()
       
       String alertPck = MyPacket::NewAlarmPacket(device::A_Yangin);
       MyNetwork::SendToAll(alertPck);
+
+      MyDevices::SetDeviceState(device::A_Yangin, false);
     }
   }
 }
