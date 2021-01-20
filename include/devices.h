@@ -97,7 +97,7 @@ namespace MyDevices
         return (MyDevices::GetMotion());
 
       case device::A_Yangin:
-        return (MyDevices::GetTemperature() > 70.0F);
+        return (MyDevices::GetTemperature() > 22.0F);
 
       default:
         return false;
