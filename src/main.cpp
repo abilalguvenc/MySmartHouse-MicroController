@@ -1,53 +1,66 @@
 #include <Arduino.h>
 #include <Servo.h>
-// #include "devices.h"
-// #include "network.h"
-// #include "mytime.h"
-//#include "packet.h"
+#include "devices.h"
+#include "network.h"
+#include "mytime.h"
+#include "packet.h"
 
-String ssid = "TacticForce";
-String pass = "Hes20181920";
+#define beyza_e
+
+#ifdef beyza_e
+#define my_ssid "Buyuk"
+#define my_pass "34buyuk42"
+#endif
+
+#ifdef hes
+#define my_ssid "TacticForce"
+#define my_pass "Hes20181920"
+#endif
+
+String pack;
 
 void setup() 
 {
   Serial.begin(115200);
+  delay(1000);
   Serial.println("");
 
-  // MyDevices::init();
-  // MyNetwork::init(ssid, pass);
-  //String pack = "asd";
-  //int in = 1;
-  //bool res = MyPacket::OnUpdateIoTState(pack, in);
+  MyNetwork::init(my_ssid, my_pass);
+
+  MyDevices::init();
+  MyDevices::SetDeviceState(device::A_Yangin, ON);
+  Serial.println("\nAkilli evim baslatildi!");
 }
 
 void loop() 
 {
-  // if (MyTime::isOneSecondPassed()) 
-  // {
-  //   // float temp = MyDevices::GetTemperature();
-  //   // Create Packet
-  //   // MyNetwork::SendToAll(packet);
-  //   // Serial.print(" Sicaklik: ");
-  //   // Serial.println(temp);
+  MyNetwork::Handle();
 
-  //   delay(10);
+  if (MyTime::isOneSecondPassed()) 
+  {    
+    MyDevices::UpdateAC();
 
+    String tmpPck = MyPacket::NewTempPacket();
+    MyNetwork::SendToAll(tmpPck);
+
+    if (MyDevices::GetAlarm(device::A_Hirsiz))
+    {
+      Serial.println("ALARM: Hirsiz var!");
+
+      String alertPck = MyPacket::NewAlarmPacket(device::A_Hirsiz);
+      MyNetwork::SendToAll(alertPck);
+
+      MyDevices::SetDeviceState(device::A_Hirsiz, false);
+    }
     
-  //   // uint8_t a = 16;
-  //   // Serial.println(a);
-  // }
-  Serial.println("asd");
-  delay(100);
-  //MyNetwork::Handle();
-  //MyPacket::OnUpdateIoTState();
-  
-  // digitalWrite(device::O_Lamba, HIGH);
-  // delay(1000);
-  // digitalWrite(device::O_Lamba, LOW);
-  // delay(100);
-  // digitalWrite(device::O_Lamba, HIGH);
-  // delay(100);
-  // digitalWrite(device::O_Lamba, LOW);
-  // delay(100);
-  // put your main code here, to run repeatedly:
+    if (MyDevices::GetAlarm(device::A_Yangin))
+    {
+      Serial.println("ALARM: Yangin var!");
+      
+      String alertPck = MyPacket::NewAlarmPacket(device::A_Yangin);
+      MyNetwork::SendToAll(alertPck);
+
+      MyDevices::SetDeviceState(device::A_Yangin, false);
+    }
+  }
 }

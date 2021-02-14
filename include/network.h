@@ -3,18 +3,34 @@
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
-//#include "packet.h"
+#include "packet.h"
+#include "types.h"
+#include <list>
+
+//#define STATICIP
 
 namespace MyNetwork
 {
     WiFiServer server(80);
     WiFiClient client;
 
+
+    IPAddress local_IP(192, 168, 1, 27);
+    IPAddress gateway(192, 168, 1, 1);
+    IPAddress subnet(255, 255, 0, 0);
+
     void init(String ssid, String pass)
     {
+        #ifdef STATICIP
+            if (!WiFi.config(local_IP, gateway, subnet)) 
+            {
+                Serial.println("HATA: STA ayari yapilamadi!");
+            }
+        #endif
+        
         WiFi.begin(ssid, pass);
-
-        Serial.print("Connecting");
+        
+        Serial.print("Connecting to WiFi");
         while(WiFi.status()!= WL_CONNECTED)
         {
             delay(1000);
@@ -37,6 +53,9 @@ namespace MyNetwork
             MyNetwork::client = MyNetwork::server.available();
             if (MyNetwork::client)
                 Serial.println("Client baglandi!");
+            
+            client.print(MyPacket::DeviceStatesPacket());
+            
         }
         
         
@@ -47,17 +66,38 @@ namespace MyNetwork
             {
                 while(MyNetwork::client.available() > 0)
                 {
-                char c = MyNetwork::client.read();
-
-                if (c=='\n') break;
-
-                packet += c;
-                Serial.write(c);
+                    char c = MyNetwork::client.read(); //gelen veriyi client bağlı olduğu sürece okur.
+                    if (c=='\n') break;
+                    packet += c; //gelen veriyi paketler.
                 }
-                
-                //MyPacket::Handle(packet);
+
+                Serial.print("\nPacket: "); //gelen paketi yazdırır.
+                for (char c : packet)
+                {
+                    Serial.print((uint8_t)c); //char tipinden uint'e çevirerek yazdırır.
+                    Serial.print(" ");
+                }
+                Serial.println("");
+
+                if (MyPacket::Handle(packet)) 
+                {
+                    Serial.println("Kullanici islemi basariyla gerceklestirildi.\n");
+                }
+                else
+                {
+                    Serial.println("Kullanicinin gonderdigi paket hatali!\n");
+                    //MyNetwork::client.stop();
+                }
             }
+        }
     }
+
+    void SendToAll(String packet)
+    {
+        if (MyNetwork::client.connected())
+        {
+            MyNetwork::client.print(packet);
+        }
     }
 }
 
