@@ -5,17 +5,8 @@
 #include "mytime.h"
 #include "packet.h"
 
-#define beyza_e
-
-#ifdef beyza_e
-#define my_ssid "Buyuk"
-#define my_pass "34buyuk42"
-#endif
-
-#ifdef hes
-#define my_ssid "TacticForce"
-#define my_pass "Hes20181920"
-#endif
+#define my_ssid "WIFI_SSID"
+#define my_pass "WIFI_PASSWORD"
 
 String pack;
 
